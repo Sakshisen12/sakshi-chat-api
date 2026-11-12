@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       }),
     });
     const data = await r.json();
-    if (!r.ok) return res.status(502).json({ error: 'The assistant is unavailable right now.' });
+          if (!r.ok) { console.error('Groq error:', JSON.stringify(data)); return res.status(502).json({ error: 'The assistant is unavailable right now.' }); }
     res.status(200).json({ reply: data.choices[0].message.content });
   } catch (e) {
     res.status(500).json({ error: 'Something went wrong.' });
