@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 const ALLOWED_ORIGIN = 'https://sakshisen12.github.io'; // your site
-const MODEL = 'llama-3.3-70b-versatile';                 // check current model names in the Groq console
+ const MODEL = 'openai/gpt-oss-20b';                 // check current model names in the Groq console
 const knowledge = fs.readFileSync(path.join(process.cwd(), 'knowledge.md'), 'utf8');
 
 const SYSTEM = `You are the AI assistant on Sakshi Sen's portfolio website.
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
       body: JSON.stringify({
-        model: MODEL, temperature: 0.3, max_tokens: 400,
+                   model: MODEL, temperature: 0.3, max_tokens: 1000, reasoning_effort: 'low',
         messages: [{ role: 'system', content: SYSTEM }, ...past, { role: 'user', content: message }],
       }),
     });
